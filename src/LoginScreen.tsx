@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useAuth } from './contexts/AuthContext';
 
 function LoginScreen() {
-  const [username, setUsername] = useState('');
+  const { login } = useAuth();
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleLogin = async () => {
     try {
-      if (username !== 'admin' || password !== 'password') {
-        throw new Error('Invalid credentials');
+      const success = await login(email, password);
+      if (success) {
+        setError('');
+      } else {
+        setError('Login failed: Invalid credentials or network issue');
       }
-      setError('');
     } catch {
       setError('Login failed: Invalid credentials or network issue');
     }
@@ -20,9 +24,9 @@ function LoginScreen() {
   return (
     <View style={styles.container}>
       <TextInput
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
         style={styles.input}
       />
       <TextInput
