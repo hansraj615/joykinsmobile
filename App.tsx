@@ -2,13 +2,13 @@
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { View } from 'react-native';
-
 import { SplashScreen } from './src/components/screens/SplashScreen';
 import { AuthScreen } from './src/components/screens/AuthScreen';
 import { HomeScreen } from './src/components/screens/HomeScreen';
 import { Navigation } from './src/components/Navigation';
 import { AuthProvider } from './src/contexts/AuthContext';
+import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import LoginScreen from './src/LoginScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,16 +37,10 @@ export default function App() {
   return (
     <AuthProvider>
       <NavigationContainer>
-        <View style={{ flex: 1 }}>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Main" component={renderMainScreen} />
-          </Stack.Navigator>
-          <Navigation
-            currentScreen={currentScreen}
-            onScreenChange={setCurrentScreen}
-            cartItemCount={3}
-          />
-        </View>
+    <View style={styles.container}>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <LoginScreen />
+    </View>
       </NavigationContainer>
     </AuthProvider>
   );
