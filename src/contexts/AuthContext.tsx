@@ -21,7 +21,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       console.log('🔑 Logging in with', email, password);
       const response = await loginCustomer({ email, password });
-      const receivedToken = response?.token;
+      const receivedToken =
+        response?.token ||
+        // some endpoints nest the token inside a data object
+        response?.data?.token;
 
       if (receivedToken) {
         setToken(receivedToken);
