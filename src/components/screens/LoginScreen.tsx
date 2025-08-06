@@ -38,6 +38,7 @@ export const LoginScreen = ({ navigation }: Props) => {
 
       if (success) {
         Alert.alert('Login Successful');
+        navigation.replace('Home');
       } else {
         Alert.alert('Login Failed', 'Invalid credentials');
       }
@@ -56,7 +57,7 @@ export const LoginScreen = ({ navigation }: Props) => {
 
       <View style={styles.form}>
         <TextInput
-          placeholder="Email"
+          placeholder="Enter your email"
           value={email}
           onChangeText={setEmail}
           autoCapitalize="none"
@@ -65,7 +66,7 @@ export const LoginScreen = ({ navigation }: Props) => {
 
         <View style={styles.passwordWrapper}>
           <TextInput
-            placeholder="Password"
+            placeholder="Enter your password"
             secureTextEntry={!showPassword}
             value={password}
             onChangeText={setPassword}
