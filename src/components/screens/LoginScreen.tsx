@@ -14,6 +14,7 @@ import { JoykinsLogo } from '../JoykinsLogo';
 import { useAuth } from '../../contexts/AuthContext';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/types';
+import { commonStyles, colors } from '../../styles/commonStyles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
@@ -38,7 +39,6 @@ export const LoginScreen = ({ navigation }: Props) => {
 
       if (success) {
         Alert.alert('Login Successful');
-        navigation.replace('Home');
       } else {
         Alert.alert('Login Failed', 'Invalid credentials');
       }
@@ -49,7 +49,7 @@ export const LoginScreen = ({ navigation }: Props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={commonStyles.container}>
       <View style={styles.header}>
         <JoykinsLogo size="lg" />
         <Text style={styles.headerText}>Welcome Back!</Text>
@@ -62,7 +62,7 @@ export const LoginScreen = ({ navigation }: Props) => {
           value={email}
           onChangeText={setEmail}
           autoCapitalize="none"
-          style={styles.input}
+          style={commonStyles.input}
         />
 
         <View style={styles.passwordWrapper}>
@@ -72,7 +72,7 @@ export const LoginScreen = ({ navigation }: Props) => {
             secureTextEntry={!showPassword}
             value={password}
             onChangeText={setPassword}
-            style={[styles.input, { paddingRight: 45 }]}
+            style={[commonStyles.input, { paddingRight: 45 }]}
           />
           <TouchableOpacity
             onPress={() => setShowPassword(!showPassword)}
@@ -88,19 +88,19 @@ export const LoginScreen = ({ navigation }: Props) => {
             <Text style={styles.optionText}> Remember me</Text>
           </View>
           <TouchableOpacity>
-            <Text style={[styles.optionText, { color: '#FF9800' }]}>Forgot Password?</Text>
+            <Text style={[styles.optionText, { color: colors.primary }]}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>
 
         <TouchableOpacity
-          style={styles.button}
+          style={commonStyles.button}
           onPress={handleLogin}
           disabled={isLoading}
         >
           {isLoading ? (
             <ActivityIndicator color="#fff" />
           ) : (
-            <Text style={styles.buttonText}>Sign In</Text>
+            <Text style={commonStyles.buttonText}>Sign In</Text>
           )}
         </TouchableOpacity>
 
@@ -109,7 +109,7 @@ export const LoginScreen = ({ navigation }: Props) => {
           style={{ marginTop: 20 }}
         >
           <Text style={{ color: '#666' }}>
-            Don’t have an account? <Text style={{ color: '#FF9800' }}>Sign Up</Text>
+            Don’t have an account? <Text style={{ color: colors.primary }}>Sign Up</Text>
           </Text>
         </TouchableOpacity>
       </View>
@@ -118,24 +118,14 @@ export const LoginScreen = ({ navigation }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F3F4F6' },
   header: {
-    backgroundColor: '#45B2E0',
+    backgroundColor: colors.accent,
     paddingTop: 60,
     paddingBottom: 30,
     alignItems: 'center',
   },
   headerText: { color: 'white', fontSize: 16, marginTop: 10 },
   form: { padding: 20 },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 12,
-    marginBottom: 14,
-    backgroundColor: '#fff',
-  },
   passwordWrapper: { position: 'relative' },
   icon: {
     position: 'absolute',
@@ -150,11 +140,4 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   optionText: { fontSize: 14, color: '#666' },
-  button: {
-    backgroundColor: '#FF9800',
-    paddingVertical: 14,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  buttonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
 });

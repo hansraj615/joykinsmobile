@@ -80,3 +80,22 @@ export const registerCustomer = async ({ name, email, password, phone }: Registe
     throw error;
   }
 };
+
+/**
+ * 🚪 Logout customer using fetch
+ */
+export const logoutCustomer = async (token: string) => {
+  try {
+    const res = await fetch(`${BASE_URL}/logout`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return await res.json();
+  } catch (err) {
+    console.error('❌ Logout API fetch error:', err);
+    throw err;
+  }
+};

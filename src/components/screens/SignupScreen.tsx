@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { JoykinsLogo } from '../JoykinsLogo';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/types';
+import { commonStyles, colors } from '../../styles/commonStyles';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Signup'>;
 
@@ -45,7 +46,7 @@ export const SignupScreen = ({ navigation }: Props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={commonStyles.container}>
       <View style={styles.header}>
         <JoykinsLogo size="lg" />
         <Text style={styles.headerText}>Create your Joykins account</Text>
@@ -54,20 +55,20 @@ export const SignupScreen = ({ navigation }: Props) => {
       <View style={styles.form}>
         <TextInput
           placeholder="Full Name"
-          style={styles.input}
+          style={commonStyles.input}
           value={name}
           onChangeText={setName}
         />
         <TextInput
           placeholder="Email"
-          style={styles.input}
+          style={commonStyles.input}
           value={email}
           onChangeText={setEmail}
           autoCapitalize="none"
         />
         <TextInput
           placeholder="Phone Number"
-          style={styles.input}
+          style={commonStyles.input}
           value={phone}
           onChangeText={setPhone}
           keyboardType="phone-pad"
@@ -76,7 +77,7 @@ export const SignupScreen = ({ navigation }: Props) => {
           <TextInput
             placeholder="Password"
             secureTextEntry={!showPassword}
-            style={styles.input}
+            style={commonStyles.input}
             value={password}
             onChangeText={setPassword}
           />
@@ -93,17 +94,17 @@ export const SignupScreen = ({ navigation }: Props) => {
           <Text style={styles.optionText}> I agree to Terms & Privacy</Text>
         </View>
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleSignup}
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <ActivityIndicator color="#fff" />
-          ) : (
-            <Text style={styles.buttonText}>Create Account</Text>
-          )}
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={commonStyles.button}
+            onPress={handleSignup}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={commonStyles.buttonText}>Create Account</Text>
+            )}
+          </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => navigation.replace('Login')}
@@ -111,7 +112,7 @@ export const SignupScreen = ({ navigation }: Props) => {
         >
           <Text style={{ color: '#666' }}>
             Already have an account?{' '}
-            <Text style={{ color: '#FF9800' }}>Sign In</Text>
+            <Text style={{ color: colors.primary }}>Sign In</Text>
           </Text>
         </TouchableOpacity>
       </View>
@@ -120,24 +121,14 @@ export const SignupScreen = ({ navigation }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F3F4F6' },
   header: {
-    backgroundColor: '#45B2E0',
+    backgroundColor: colors.accent,
     paddingTop: 60,
     paddingBottom: 30,
     alignItems: 'center',
   },
   headerText: { color: 'white', fontSize: 16, marginTop: 10 },
   form: { padding: 20 },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 12,
-    marginBottom: 14,
-    backgroundColor: '#fff',
-  },
   passwordWrapper: { position: 'relative' },
   icon: {
     position: 'absolute',
@@ -147,11 +138,4 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   optionText: { fontSize: 14, color: '#666' },
-  button: {
-    backgroundColor: '#FF9800',
-    paddingVertical: 14,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  buttonText: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
 });
