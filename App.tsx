@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StatusBar, useColorScheme } from 'react-native';
 import { SplashScreen } from './src/components/screens/SplashScreen';
-import { LoginScreen } from './src/components/screens/LoginScreen';
-import { SignupScreen } from './src/components/screens/SignupScreen';
-import { HomeScreen } from './src/components/screens/HomeScreen';
 import { AuthProvider } from './src/contexts/AuthContext';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-
-const Stack = createNativeStackNavigator();
+import { AppNavigator } from './src/navigation/AppNavigator';
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -20,18 +14,9 @@ export default function App() {
 
   return (
     <AuthProvider>
-      <NavigationContainer>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-        <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Signup" component={SignupScreen} />
-          <Stack.Screen name="Home" component={HomeScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <AppNavigator />
     </AuthProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-});

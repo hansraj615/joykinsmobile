@@ -1,21 +1,39 @@
 // src/contexts/AuthContext.tsx
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { loginCustomer } from '../api/authApi';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { loginCustomer, logoutCustomer } from '../api/authApi';
 
 type AuthContextType = {
   login: (email: string, password: string) => Promise<boolean>;
   token: string | null;
-  logout: () => void;
+  logout: () => Promise<void>;
+  loading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType>({
   login: async () => false,
   token: null,
-  logout: () => {},
+  logout: async () => {},
+  loading: true,
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadToken = async () => {
+      try {
+        const storedToken = await AsyncStorage.getItem('token');
+        if (storedToken) {
+          setToken(storedToken);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadToken();
+  }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
@@ -27,6 +45,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         response?.data?.token;
 
       if (receivedToken) {
+        await AsyncStorage.setItem('token', receivedToken);
         setToken(receivedToken);
         console.log('✅ Login response:', response);
         return true;
@@ -39,12 +58,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const logout = () => {
-    setToken(null);
+  const logout = async () => {
+    try {
+      if (token) {
+        await logoutCustomer(token);
+      }
+    } catch (error) {
+      console.log('❌ Logout failed', error);
+    } finally {
+      await AsyncStorage.removeItem('token');
+      setToken(null);
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ login, token, logout }}>
+    <AuthContext.Provider value={{ login, token, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

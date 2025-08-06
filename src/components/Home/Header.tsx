@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { JoykinsLogo } from '../JoykinsLogo';
 import Icon from 'react-native-vector-icons/Feather';
 
