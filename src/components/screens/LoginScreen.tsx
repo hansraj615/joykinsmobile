@@ -58,6 +58,7 @@ export const LoginScreen = ({ navigation }: Props) => {
       <View style={styles.form}>
         <TextInput
           placeholder="Enter your email"
+          placeholderTextColor="#888"
           value={email}
           onChangeText={setEmail}
           autoCapitalize="none"
@@ -67,10 +68,11 @@ export const LoginScreen = ({ navigation }: Props) => {
         <View style={styles.passwordWrapper}>
           <TextInput
             placeholder="Enter your password"
+            placeholderTextColor="#888"
             secureTextEntry={!showPassword}
             value={password}
             onChangeText={setPassword}
-            style={styles.input}
+            style={[styles.input, { paddingRight: 45 }]}
           />
           <TouchableOpacity
             onPress={() => setShowPassword(!showPassword)}
